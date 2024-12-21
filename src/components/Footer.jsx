@@ -1,6 +1,6 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const footerSections = {
@@ -136,14 +136,14 @@ const Footer = () => {
               ❤️
             </motion.span>
             {' '}by{' '}
-            <motion.a
-              href="/developer"
+            <Link
+              to="/developer"
               className="text-red-500 hover:text-red-400 transition-colors duration-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Shishir
-            </motion.a>
+            </Link>
           </motion.p>
 
           <motion.div 
