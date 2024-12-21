@@ -35,6 +35,13 @@ function Header() {
         { text: "Help Center", icon: FaQuestionCircle, to: "/help" },
     ];
 
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleLogout = () => {
+        logout();
+        setIsOpen(false);
+    };
+
     return (
         <motion.header 
             className={`fixed w-full z-50 transition-all duration-300 ${
@@ -97,71 +104,50 @@ function Header() {
                     {/* Auth Section */}
                     <div className="hidden md:flex items-center space-x-3">
                         {isAuthenticated ? (
-                            <div className="relative">
+                            <div className="relative ml-3">
                                 <motion.div
-                                    className="flex items-center space-x-2 md:space-x-3"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
+                                    initial={false}
+                                    animate={isOpen ? "open" : "closed"}
                                 >
-                                    <button
-                                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                        className="flex items-center space-x-2 text-gray-700 hover:text-red-600 group"
+                                    <motion.button
+                                        className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
+                                        onClick={() => setIsOpen(!isOpen)}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
                                     >
-                                        <motion.div 
-                                            className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white font-semibold shadow-md"
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                        >
-                                            {user?.email?.[0]?.toUpperCase() || 'U'}
-                                        </motion.div>
-                                        <span className="hidden lg:inline text-sm md:text-base font-medium">{user?.email || 'User'}</span>
-                                        <motion.svg
-                                            className="w-4 h-4 md:w-5 md:h-5 transition-transform"
-                                            animate={{ rotate: isDropdownOpen ? 180 : 0 }}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </motion.svg>
-                                    </button>
+                                        <span className="sr-only">Open user menu</span>
+                                        <img
+                                            className="h-8 w-8 rounded-full"
+                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            alt=""
+                                        />
+                                    </motion.button>
 
-                                    <AnimatePresence>
-                                        {isDropdownOpen && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                                                animate={{ opacity: 1, y: 0, scale: 1 }}
-                                                exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                                                className="absolute right-0 mt-12 w-56 py-2 bg-white rounded-xl shadow-xl border border-gray-100"
-                                            >
-                                                {dropdownLinks.map((item, index) => (
-                                                    <motion.div
-                                                        key={index}
-                                                        initial={{ opacity: 0, x: -20 }}
-                                                        animate={{ opacity: 1, x: 0 }}
-                                                        transition={{ delay: index * 0.1 }}
-                                                    >
-                                                        <Link
-                                                            to={item.to}
-                                                            className="flex items-center space-x-3 px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 group text-sm md:text-base"
-                                                        >
-                                                            <item.icon className="w-4 h-4 md:w-5 md:h-5 group-hover:text-red-600 transition-colors" />
-                                                            <span className="font-medium">{item.text}</span>
-                                                        </Link>
-                                                    </motion.div>
-                                                ))}
-                                                <hr className="my-2 border-gray-100" />
-                                                <motion.button
-                                                    onClick={logout}
-                                                    className="w-full flex items-center space-x-3 px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 group text-sm md:text-base"
-                                                    whileHover={{ x: 5 }}
+                                    {isOpen && (
+                                        <motion.div
+                                            className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                            initial={{ opacity: 0, y: -20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -20 }}
+                                            transition={{ duration: 0.2 }}
+                                        >
+                                            {dropdownLinks.map((item, index) => (
+                                                <Link
+                                                    to={item.to}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    key={index}
                                                 >
-                                                    <FaSignOutAlt className="w-4 h-4 md:w-5 md:h-5 group-hover:text-red-600 transition-colors" />
-                                                    <span className="font-medium">Logout</span>
-                                                </motion.button>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                                    {item.text}
+                                                </Link>
+                                            ))}
+                                            <button
+                                                onClick={handleLogout}
+                                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            >
+                                                Sign out
+                                            </button>
+                                        </motion.div>
+                                    )}
                                 </motion.div>
                             </div>
                         ) : (
