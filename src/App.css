@@ -1,0 +1,200 @@
+/* Base styles */
+:root {
+    --primary: #ef4444;
+    --primary-dark: #dc2626;
+    --secondary: #1f2937;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: background-color 0.3s ease;
+}
+
+/* Container responsive widths */
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Breakpoint-specific container sizes */
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+/* Responsive typography */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 1024px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Animation keyframes */
+@keyframes float {
+    0% {
+        transform: translateX(calc(100vw + 200px));
+    }
+    100% {
+        transform: translateX(-300px);
+    }
+}
+
+.animate-float {
+    animation: float 8s linear infinite;
+}
+
+/* Optimize animations */
+* {
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Responsive grid system */
+.grid {
+    display: grid;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .grid {
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        gap: 2rem;
+    }
+}
+
+/* Responsive spacing utilities */
+.section-padding {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+    .section-padding {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .section-padding {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+}
+
+/* Touch-friendly interactions */
+@media (hover: hover) and (pointer: fine) {
+    .hover-effect {
+        transition: all 0.2s ease;
+    }
+    
+    .hover-effect:hover {
+        transform: translateY(-2px);
+    }
+}
+
+/* Reduce motion if preferred */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Better touch targets for mobile */
+@media (max-width: 767px) {
+    button, 
+    [role="button"],
+    .clickable {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    input,
+    select,
+    textarea {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus styles */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        print-color-adjust: exact;
+    }
+}
